@@ -1,0 +1,25 @@
+load("@aspect_rules_ts//ts:defs.bzl", "ts_project")
+load("@aspect_rules_js//js:defs.bzl", "js_binary")
+
+ts_project(
+    name = "hello-world",
+    srcs = [
+        "bin/app.ts",
+        "lib/index.ts",
+    ],
+    data = [
+        "//projects/hello-world/handler",
+    ],
+    tsconfig = "//:tsconfig",
+    deps = [
+        "//:node_modules/@types/node",
+        "//:node_modules/aws-cdk-lib",
+        "//:node_modules/constructs",
+    ],
+)
+
+js_binary(
+    name = "main",
+    data = [":hello-world"],
+    entry_point = "bin/app.js",
+)
