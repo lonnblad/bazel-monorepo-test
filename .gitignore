@@ -13,4 +13,8 @@
 
 # Dependency directories (remove the comment below to include it)
 # vendor/
-node_modules
+# bazel-bazel-monorepo-test
+# bazel-bin
+# bazel-out
+# bazel-testlogs
+# node_modules
