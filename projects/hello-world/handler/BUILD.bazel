@@ -10,7 +10,10 @@ go_library(
 
 go_binary(
     name = "handler",
+    out = "bootstrap",
     embed = [":handler_lib"],
+    goarch = "arm64",
+    goos = "linux",
     visibility = ["//visibility:public"],
 )
 
@@ -19,4 +22,13 @@ go_test(
     srcs = ["main_test.go"],
     embed = [":handler_lib"],
     deps = ["@com_github_stretchr_testify//assert"],
+)
+
+genrule(
+    name = "lambda_zip",
+    srcs = [":handler"],
+    outs = ["lambda_deploy.zip"],
+    cmd = "$(location @bazel_tools//tools/zip:zipper) c $@ bootstrap=$<",
+    tools = ["@bazel_tools//tools/zip:zipper"],
+    visibility = ["//visibility:public"],
 )

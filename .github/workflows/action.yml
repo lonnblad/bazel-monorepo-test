@@ -18,6 +18,7 @@ jobs:
           path: "~/.cache/bazel"
           key: bazel
       - run: bazel build //...
+      - run: cd bazel-bin/projects/hello-world/_dist && npx cdk synth
   test:
     runs-on: ubuntu-latest
     steps:
