@@ -1,27 +1,18 @@
 load("@aspect_rules_ts//ts:defs.bzl", "ts_project")
-load("@aspect_rules_js//js:defs.bzl", "js_binary")
 
 ts_project(
     name = "hello-world",
-    srcs = [
-        "bin/app.ts",
-        "cdk.json",
-        "lib/index.ts",
-    ],
     data = [
-        "//projects/hello-world/handler",
+        "bin/app.ts",
+        "lib/index.ts",
+        "//projects/hello-world/handler:lambda_zip",
     ],
     tsconfig = "//:tsconfig",
+    visibility = ["//visibility:public"],
     deps = [
         "//:node_modules/@types/node",
         "//:node_modules/aws-cdk-lib",
         "//:node_modules/constructs",
         "//:node_modules/typescript",
     ],
-)
-
-js_binary(
-    name = "main",
-    data = [":hello-world"],
-    entry_point = "bin/app.js",
 )

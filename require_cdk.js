@@ -1,0 +1,1 @@
+require('aws-cdk/bin/cdk')

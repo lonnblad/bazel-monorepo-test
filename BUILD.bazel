@@ -1,5 +1,6 @@
 load("@bazel_gazelle//:def.bzl", "gazelle")
 load("@npm//:defs.bzl", "npm_link_all_packages")
+load("@aspect_rules_js//js:defs.bzl", "js_binary")
 load("@aspect_rules_ts//ts:defs.bzl", "ts_config")
 load("@com_github_bazelbuild_buildtools//buildifier:def.bzl", "buildifier")
 
@@ -28,4 +29,18 @@ ts_config(
 
 buildifier(
     name = "buildifier",
+)
+
+js_binary(
+    name = "cdk",
+    args = [
+        "--app",
+        "'npx ts-node projects/hello-world/_dist/bin/app.ts'",
+    ],
+    data = [
+        "//:node_modules/aws-cdk",
+        "//projects/hello-world/_dist:hello-world",
+    ],
+    entry_point = "require_cdk.js",
+    visibility = ["//visibility:public"],
 )
