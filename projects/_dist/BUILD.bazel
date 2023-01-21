@@ -1,0 +1,17 @@
+load("@aspect_rules_ts//ts:defs.bzl", "ts_project")
+
+ts_project(
+    name = "hello-world",
+    data = [
+        "bin/app.ts",
+    ],
+    tsconfig = "//:tsconfig",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//:node_modules/@bazel-poc/hello-world-service",
+        "//:node_modules/@types/node",
+        "//:node_modules/aws-cdk-lib",
+        "//:node_modules/constructs",
+        "//:node_modules/typescript",
+    ],
+)

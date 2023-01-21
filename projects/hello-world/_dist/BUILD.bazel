@@ -1,18 +1,30 @@
 load("@aspect_rules_ts//ts:defs.bzl", "ts_project")
+load("@aspect_rules_js//npm:defs.bzl", "npm_package")
 
 ts_project(
-    name = "hello-world",
+    name = "hello-world-service-ts",
     data = [
-        "bin/app.ts",
         "lib/index.ts",
         "//projects/hello-world/handler:lambda_zip",
     ],
     tsconfig = "//:tsconfig",
-    visibility = ["//visibility:public"],
     deps = [
         "//:node_modules/@types/node",
         "//:node_modules/aws-cdk-lib",
         "//:node_modules/constructs",
         "//:node_modules/typescript",
     ],
+)
+
+npm_package(
+    name = "_dist",
+    srcs = [
+        "package.json",
+        ":hello-world-service-ts",
+    ],
+    include_runfiles = True,
+    include_srcs_packages = [
+        "**",
+    ],
+    visibility = ["//visibility:public"],
 )

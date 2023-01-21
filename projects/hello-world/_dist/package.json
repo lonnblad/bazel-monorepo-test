@@ -1,0 +1,4 @@
+{
+  "name": "@bazel-poc/hello-world-service",
+  "main": "lib/index.js"
+}

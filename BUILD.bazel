@@ -35,11 +35,11 @@ js_binary(
     name = "cdk",
     args = [
         "--app",
-        "'npx ts-node projects/hello-world/_dist/bin/app.ts'",
+        "'npx ts-node projects/_dist/bin/app.ts'",
     ],
     data = [
         "//:node_modules/aws-cdk",
-        "//projects/hello-world/_dist:hello-world",
+        "//projects/_dist:hello-world",
     ],
     entry_point = "require_cdk.js",
     visibility = ["//visibility:public"],

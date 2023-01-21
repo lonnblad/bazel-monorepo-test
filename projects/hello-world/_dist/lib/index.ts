@@ -10,12 +10,14 @@ import {
 import { Construct } from "constructs";
 import { join } from "path";
 
-export class LambdaCronService extends Construct {
+export class HelloWorldService extends Construct {
   constructor(scope: Construct, id: string) {
     super(scope, id);
 
     const lambdaFn = new LambdaFunction(this, "LambdaFunction", {
-      code: new AssetCode(join(__dirname, "../../handler/lambda_deploy.zip")),
+      code: new AssetCode(
+        join(__dirname, "../projects/hello-world/handler/lambda_deploy.zip")
+      ),
       handler: "bootstrap",
       timeout: Duration.seconds(300),
       runtime: Runtime.PROVIDED_AL2,
