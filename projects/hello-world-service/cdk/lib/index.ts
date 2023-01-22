@@ -15,9 +15,7 @@ export class HelloWorldService extends Construct {
     super(scope, id);
 
     const lambdaFn = new LambdaFunction(this, "LambdaFunction", {
-      code: new AssetCode(
-        join(__dirname, "../projects/hello-world/handler/lambda_deploy.zip")
-      ),
+      code: new AssetCode(join(__dirname, "../assets/lambda_deploy.zip")),
       handler: "bootstrap",
       timeout: Duration.seconds(300),
       runtime: Runtime.PROVIDED_AL2,

@@ -1,2 +1,2 @@
 node_modules
-projects/hello-world/_dist/node_modules
+projects/hello-world-service/cdk/node_modules

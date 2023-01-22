@@ -1,11 +1,18 @@
 load("@aspect_rules_ts//ts:defs.bzl", "ts_project")
 load("@aspect_rules_js//npm:defs.bzl", "npm_package")
+load("@bazel_skylib//rules:copy_file.bzl", "copy_file")
+
+copy_file(
+    name = "cp_lambda_zip",
+    src = "//projects/hello-world-service/service/handler:lambda_zip",
+    out = "assets/lambda_deploy.zip",
+)
 
 ts_project(
-    name = "hello-world-service-ts",
+    name = "hello-world-service",
     data = [
         "lib/index.ts",
-        "//projects/hello-world/handler:lambda_zip",
+        ":cp_lambda_zip",
     ],
     tsconfig = "//:tsconfig",
     deps = [
@@ -17,10 +24,10 @@ ts_project(
 )
 
 npm_package(
-    name = "_dist",
+    name = "cdk",
     srcs = [
         "package.json",
-        ":hello-world-service-ts",
+        ":hello-world-service",
     ],
     include_runfiles = True,
     include_srcs_packages = [
