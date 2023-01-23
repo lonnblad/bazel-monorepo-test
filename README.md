@@ -1,22 +1,57 @@
 # Bazel Monorepo Test
 
 ## Tools
+
 - bazel
 - bazelisk
 - Bazel plugin for Visual Studio Code
   - buildifier
+- pnpm
+- golang
+
+## Testing
+
+```sh
+bazel test //...
+```
+
+## Building
+
+```sh
+bazel build //...
+```
+
+## Example Stack
+
+```sh
+bazel run :deploy-example-stack
+```
 
 ## Golang
 
 ### Generate Bazel build-files
-- bazel run //:gazelle
 
-### Manage Dependencies
-- go mod tidy
-- bazel run //:gazelle-update-repos
+```sh
+bazel run //:gazelle
+```
+
+### Adding a Dependency
+
+```sh
+go get <dependency>
+bazel run //:gazelle-update-repos
+```
 
 ## Typescript
 
 ### Bazel build-files
 
-### Dependencies
+### Adding a Dependency
+
+```sh
+pnpm add <dependency>
+```
+
+## TODO
+
+- publish to github package registry

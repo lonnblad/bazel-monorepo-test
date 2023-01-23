@@ -32,15 +32,15 @@ buildifier(
 )
 
 js_binary(
-    name = "cdk",
+    name = "deploy-example-stack",
     args = [
+        "deploy",
         "--app",
-        "'npx ts-node projects/example-stack/bin/app.ts'",
+        "$(location //projects/example-stack:synth)",
     ],
     data = [
         "//:node_modules/aws-cdk",
-        "//projects/example-stack",
+        "//projects/example-stack:synth",
     ],
     entry_point = "require_cdk.js",
-    visibility = ["//visibility:public"],
 )

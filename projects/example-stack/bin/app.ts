@@ -6,3 +6,5 @@ const app = new App();
 const stack = new Stack(app, "ExampleStack");
 
 new HelloWorldService(stack, "HelloWorldService");
+
+app.synth();

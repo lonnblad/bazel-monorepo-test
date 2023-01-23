@@ -18,7 +18,6 @@ jobs:
           path: "~/.cache/bazel"
           key: bazel-build
       - run: bazel build //...
-      - run: bazel run :cdk -- synth
   test:
     runs-on: ubuntu-latest
     steps:

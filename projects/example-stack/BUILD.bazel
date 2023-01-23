@@ -1,4 +1,6 @@
 load("@aspect_rules_ts//ts:defs.bzl", "ts_project")
+load("//rules/cdk:rules.bzl", "synth")
+load("@aspect_rules_js//js:defs.bzl", "js_binary")
 
 ts_project(
     name = "example-stack",
@@ -6,7 +8,6 @@ ts_project(
         "bin/app.ts",
     ],
     tsconfig = "//:tsconfig",
-    visibility = ["//visibility:public"],
     deps = [
         "//:node_modules/@bazel-poc/hello-world-service",
         "//:node_modules/@types/node",
@@ -14,4 +15,18 @@ ts_project(
         "//:node_modules/constructs",
         "//:node_modules/typescript",
     ],
+)
+
+js_binary(
+    name = "app",
+    data = [
+        ":example-stack",
+    ],
+    entry_point = ":bin/app.js",
+)
+
+synth(
+    name = "synth",
+    cdk_app = ":app",
+    visibility = ["//visibility:public"],
 )
