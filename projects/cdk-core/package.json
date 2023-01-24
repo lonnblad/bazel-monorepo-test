@@ -1,0 +1,4 @@
+{
+  "name": "@bazel-poc/cdk-core",
+  "main": "lib/index.js"
+}

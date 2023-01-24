@@ -4,11 +4,14 @@ load("@aspect_rules_js//js:defs.bzl", "js_binary")
 
 ts_project(
     name = "example-stack",
+    composite = True,
     data = [
         "bin/app.ts",
     ],
+    declaration_map = True,
     tsconfig = "//:tsconfig",
     deps = [
+        "//:node_modules/@bazel-poc/cdk-core",
         "//:node_modules/@bazel-poc/hello-world-service",
         "//:node_modules/@types/node",
         "//:node_modules/aws-cdk-lib",

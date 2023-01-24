@@ -3,9 +3,12 @@ load("@io_bazel_rules_go//go:def.bzl", "go_binary", "go_library", "go_test")
 go_library(
     name = "handler_lib",
     srcs = ["main.go"],
-    importpath = "github.com/lonnblad/bazel-monorepo-test/projects/hello-world-service/service/handler",
+    importpath = "github.com/lonnblad/bazel-poc/projects/hello-world-service/service/handler",
     visibility = ["//visibility:private"],
-    deps = ["@com_github_aws_aws_lambda_go//lambda"],
+    deps = [
+        "//projects/go-core/log",
+        "@com_github_aws_aws_lambda_go//lambda",
+    ],
 )
 
 go_binary(

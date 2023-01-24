@@ -1,4 +1,4 @@
-module github.com/lonnblad/bazel-monorepo-test
+module github.com/lonnblad/bazel-poc
 
 go 1.19
 

@@ -4,7 +4,7 @@ load("@aspect_rules_js//js:defs.bzl", "js_binary")
 load("@aspect_rules_ts//ts:defs.bzl", "ts_config")
 load("@com_github_bazelbuild_buildtools//buildifier:def.bzl", "buildifier")
 
-# gazelle:prefix github.com/lonnblad/bazel-monorepo-test
+# gazelle:prefix github.com/lonnblad/bazel-poc
 gazelle(name = "gazelle")
 
 gazelle(
@@ -24,7 +24,7 @@ ts_config(
     name = "tsconfig",
     src = "tsconfig.json",
     visibility = ["//visibility:public"],
-    deps = ["//:node_modules/@tsconfig/node16-strictest"],
+    deps = ["//:node_modules/@tsconfig/node18-strictest"],
 )
 
 buildifier(

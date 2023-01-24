@@ -1,7 +1,9 @@
 {
-  "extends": "@tsconfig/node16-strictest/tsconfig.json",
+  "extends": "@tsconfig/node18-strictest/tsconfig.json",
   "compilerOptions": {
-    "noImplicitAny": false
+    "noImplicitAny": false,
+    "composite": true,
+    "declarationMap": true
   },
   "exclude": ["node_modules"]
 }

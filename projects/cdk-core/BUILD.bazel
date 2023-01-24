@@ -1,24 +1,15 @@
 load("@aspect_rules_ts//ts:defs.bzl", "ts_project")
 load("@aspect_rules_js//npm:defs.bzl", "npm_package")
-load("@bazel_skylib//rules:copy_file.bzl", "copy_file")
-
-copy_file(
-    name = "cp_lambda_zip",
-    src = "//projects/hello-world-service/service/handler:lambda_zip",
-    out = "assets/lambda_deploy.zip",
-)
 
 ts_project(
-    name = "hello-world-service",
+    name = "cdk-core-ts",
     composite = True,
     data = [
         "lib/index.ts",
-        ":cp_lambda_zip",
     ],
     declaration_map = True,
     tsconfig = "//:tsconfig",
     deps = [
-        "//:node_modules/@bazel-poc/cdk-core",
         "//:node_modules/@types/node",
         "//:node_modules/aws-cdk-lib",
         "//:node_modules/constructs",
@@ -27,10 +18,10 @@ ts_project(
 )
 
 npm_package(
-    name = "cdk",
+    name = "cdk-core",
     srcs = [
         "package.json",
-        ":hello-world-service",
+        ":cdk-core-ts",
     ],
     include_runfiles = True,
     include_srcs_packages = [

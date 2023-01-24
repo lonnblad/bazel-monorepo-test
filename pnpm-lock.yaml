@@ -4,22 +4,27 @@ importers:
 
   .:
     specifiers:
+      '@bazel-poc/cdk-core': workspace:*
       '@bazel-poc/hello-world-service': workspace:*
-      '@tsconfig/node16-strictest': 1.0.4
+      '@tsconfig/node18-strictest': 1.0.0
       '@types/node': 18.11.9
       aws-cdk: 2.61.1
       aws-cdk-lib: 2.61.1
       constructs: 10.1.225
       typescript: 4.9.3
     dependencies:
+      '@bazel-poc/cdk-core': link:projects/cdk-core
       '@bazel-poc/hello-world-service': link:projects/hello-world-service/cdk
       aws-cdk-lib: 2.61.1_constructs@10.1.225
       constructs: 10.1.225
     devDependencies:
-      '@tsconfig/node16-strictest': 1.0.4
+      '@tsconfig/node18-strictest': 1.0.0
       '@types/node': 18.11.9
       aws-cdk: 2.61.1
       typescript: 4.9.3
+
+  projects/cdk-core:
+    specifiers: {}
 
   projects/hello-world-service/cdk:
     specifiers: {}
@@ -42,8 +47,8 @@ packages:
     resolution: {integrity: sha512-wMue2Sy4GAVTk6Ic4tJVcnfdau+gx2EnG7S+uAEe+TWJFqE4YoWN4/H8MSLj4eYJKxGg26lZwboEniNiNwZQ6Q==}
     dev: false
 
-  /@tsconfig/node16-strictest/1.0.4:
-    resolution: {integrity: sha512-kp6/DuAoKzHVv5U+p0uOesYbjrEvrYVNdQMl163a+yXXUv9twabvkCGEn3pmVxKXB45JU5MPGolDDWnONZL5ZQ==}
+  /@tsconfig/node18-strictest/1.0.0:
+    resolution: {integrity: sha512-bOuNKwO4Fzbt+Su5wqI9zNHwx5C25gLnutwVQA1sBZk0cW8UjVPVcwzIUhJIIJDUx7zDEbAwdCD2HfvIsV8dYg==}
     dev: true
 
   /@types/node/18.11.9:
