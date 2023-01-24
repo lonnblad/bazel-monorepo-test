@@ -8,7 +8,7 @@ import (
 )
 
 func handleRequest(ctx context.Context) error {
-	log.Print("Hello World!")
+	log.Print("Hello World!!")
 	return nil
 }
 
