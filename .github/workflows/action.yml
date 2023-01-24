@@ -6,6 +6,10 @@ on:
   push:
     branches: ["main"]
 
+env:
+  COMMIT_ID: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.sha || context.event.after }}
+  PARENT_ID: ${{ github.event_name == 'pull_request' && github.event.pull_request.base.sha || context.event.before }}
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -13,12 +17,13 @@ jobs:
       - uses: actions/checkout@v3
       - uses: bazelbuild/setup-bazelisk@v2
       - name: Mount bazel cache # Optional
+        if: github.event_name == 'pull_request'
         uses: actions/cache@v3
         with:
           path: "~/.cache/bazel"
-          key: bazel-build-${{ hashFiles('~/.cache/bazel') }}
+          key: bazel-build-${{ env.COMMIT_ID }}
           restore-keys: |
-            bazel-build-
+            bazel-build-${{ env.PARENT_ID }}
 
       - run: bazel build //...
   test:
@@ -30,7 +35,7 @@ jobs:
         uses: actions/cache@v3
         with:
           path: "~/.cache/bazel"
-          key: bazel-test-${{ hashFiles('~/.cache/bazel') }}
+          key: bazel-test-${{ env.COMMIT_ID }}
           restore-keys: |
-            bazel-test-
+            bazel-test-${{ env.PARENT_ID }}
       - run: bazel test //...
