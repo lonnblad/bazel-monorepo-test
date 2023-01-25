@@ -16,28 +16,53 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: bazelbuild/setup-bazelisk@v2
-      - name: Mount bazel cache # Optional
-        if: github.event_name == 'pull_request'
+
+      - name: Mount bazel cache
         uses: actions/cache@v3
         with:
-          path: "~/.cache/bazel"
+          path: |
+            bazel-bazel-poc
+            bazel-bin
+            bazel-out
+            bazel-testlogs
           key: bazel-build-${{ env.HEAD_SHA }}
           restore-keys: |
             bazel-build-${{ env.BASE_SHA }}
             bazel-build-
 
+      - name: Installing node with pnpm cache
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: "pnpm"
+          cache-dependency-path: pnpm-lock.yaml
+
       - run: bazel build //...
+
   test:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
       - uses: bazelbuild/setup-bazelisk@v2
-      - name: Mount bazel cache # Optional
+
+      - name: Mount bazel cache
         uses: actions/cache@v3
         with:
-          path: "~/.cache/bazel"
-          key: bazel-test-${{ env.HEAD_SHA }}
+          path: |
+            bazel-bazel-poc
+            bazel-bin
+            bazel-out
+            bazel-testlogs
+          key: bazel-build-${{ env.HEAD_SHA }}
           restore-keys: |
-            bazel-test-${{ env.BASE_SHA }}
-            bazel-test-
+            bazel-build-${{ env.BASE_SHA }}
+            bazel-build-
+
+      - name: Installing node with pnpm cache
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: "pnpm"
+          cache-dependency-path: pnpm-lock.yaml
+
       - run: bazel test //...
