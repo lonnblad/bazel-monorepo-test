@@ -30,13 +30,6 @@ jobs:
             bazel-build-${{ env.BASE_SHA }}
             bazel-build-
 
-      - name: Installing node with pnpm cache
-        uses: actions/setup-node@v3
-        with:
-          node-version: 18
-          cache: "pnpm"
-          cache-dependency-path: pnpm-lock.yaml
-
       - run: bazel build //...
 
   test:
@@ -57,12 +50,5 @@ jobs:
           restore-keys: |
             bazel-build-${{ env.BASE_SHA }}
             bazel-build-
-
-      - name: Installing node with pnpm cache
-        uses: actions/setup-node@v3
-        with:
-          node-version: 18
-          cache: "pnpm"
-          cache-dependency-path: pnpm-lock.yaml
 
       - run: bazel test //...
