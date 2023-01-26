@@ -64,9 +64,9 @@ jobs:
       - name: publish cdk-core
         env:
           NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
-        run: cd bazel-bin/node_modules/@lonnblad/bacel-poc.cdk-core && pnpm publish --dry-run --no-git-checks
+        run: cd bazel-bin/node_modules/@lonnblad/bacel-poc.cdk-core && pnpm publish --no-git-checks
 
       - name: publish hello-world-service
         env:
           NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
-        run: cd bazel-bin/node_modules/@lonnblad/bacel-poc.hello-world-service && pnpm publish --dry-run --no-git-checks
+        run: cd bazel-bin/node_modules/@lonnblad/bacel-poc.hello-world-service && pnpm publish --no-git-checks
