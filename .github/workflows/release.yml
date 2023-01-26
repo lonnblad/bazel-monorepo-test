@@ -15,7 +15,7 @@ jobs:
         uses: actions/cache@v3
         with:
           path: ~/.cache/bazel
-          key: bazel-build-${{ GITHUB_SHA }}
+          key: bazel-build-${{ github.sha }}
           restore-keys: |
             bazel-build-
 
@@ -31,7 +31,7 @@ jobs:
         uses: actions/cache@v3
         with:
           path: ~/.cache/bazel
-          key: bazel-test-${{ GITHUB_SHA }}
+          key: bazel-test-${{ github.sha }}
           restore-keys: |
             bazel-test-
 
@@ -51,7 +51,7 @@ jobs:
         uses: actions/cache@v3
         with:
           path: ~/.cache/bazel
-          key: bazel-build-${{ GITHUB_SHA }}
+          key: bazel-build-${{ github.sha }}
           restore-keys: |
             bazel-build-
 
