@@ -55,7 +55,3 @@ bazel run -- @pnpm//:pnpm --dir $PWD install
 ```sh
 bazel run -- @pnpm//:pnpm --dir $PWD add <dependency>
 ```
-
-## TODO
-
-- publish to github package registry
