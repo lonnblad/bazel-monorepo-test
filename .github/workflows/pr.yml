@@ -1,4 +1,4 @@
-name: Basel Monorepo Test
+name: Bazel-PoC
 
 on:
   pull_request:
