@@ -1,4 +1,4 @@
-name: Basel Monorepo Test
+name: Bazel-PoC
 
 on:
   pull_request:
@@ -70,12 +70,19 @@ jobs:
         with:
           version: 7.13
 
+      - uses: actions/setup-node@v3
+        with:
+          node-version: "18.x"
+          registry-url: "https://npm.pkg.github.com"
+          # Defaults to the user or organization that owns the workflow file
+          scope: "@lonnblad"
+
       - name: publish cdk-core
         env:
-          NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: cd bazel-bin/node_modules/@lonnblad/bacel-poc.cdk-core && pnpm publish --dry-run --no-git-checks
 
       - name: publish hello-world-service
         env:
-          NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: cd bazel-bin/node_modules/@lonnblad/bacel-poc.hello-world-service && pnpm publish --dry-run --no-git-checks
