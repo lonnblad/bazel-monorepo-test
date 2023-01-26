@@ -1,0 +1,17 @@
+{
+  "publishConfig": {
+    "@lonnblad:registry": "https://npm.pkg.github.com"
+  },
+  "devDependencies": {
+    "@tsconfig/node18-strictest": "1.0.0",
+    "@types/node": "18.11.9",
+    "aws-cdk": "2.61.1",
+    "typescript": "4.9.3"
+  },
+  "dependencies": {
+    "@lonnblad/bacel-poc.cdk-core": "workspace:*",
+    "@lonnblad/bacel-poc.hello-world-service": "workspace:*",
+    "aws-cdk-lib": "2.61.1",
+    "constructs": "10.1.225"
+  }
+}

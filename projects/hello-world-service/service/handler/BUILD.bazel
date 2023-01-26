@@ -1,0 +1,37 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_binary", "go_library", "go_test")
+
+go_library(
+    name = "handler_lib",
+    srcs = ["main.go"],
+    importpath = "github.com/lonnblad/bazel-poc/projects/hello-world-service/service/handler",
+    visibility = ["//visibility:private"],
+    deps = [
+        "//projects/go-core/log",
+        "@com_github_aws_aws_lambda_go//lambda",
+    ],
+)
+
+go_binary(
+    name = "handler",
+    out = "bootstrap",
+    embed = [":handler_lib"],
+    goarch = "arm64",
+    goos = "linux",
+    visibility = ["//visibility:public"],
+)
+
+go_test(
+    name = "handler_test",
+    srcs = ["main_test.go"],
+    embed = [":handler_lib"],
+    deps = ["@com_github_stretchr_testify//assert"],
+)
+
+genrule(
+    name = "lambda_zip",
+    srcs = [":handler"],
+    outs = ["lambda_deploy.zip"],
+    cmd = "$(location @bazel_tools//tools/zip:zipper) c $@ bootstrap=$<",
+    tools = ["@bazel_tools//tools/zip:zipper"],
+    visibility = ["//visibility:public"],
+)

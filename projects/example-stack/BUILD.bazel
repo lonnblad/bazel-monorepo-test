@@ -1,0 +1,35 @@
+load("@aspect_rules_ts//ts:defs.bzl", "ts_project")
+load("//rules/cdk:rules.bzl", "synth")
+load("@aspect_rules_js//js:defs.bzl", "js_binary")
+
+ts_project(
+    name = "example-stack",
+    composite = True,
+    data = [
+        "bin/app.ts",
+    ],
+    declaration_map = True,
+    tsconfig = "//:tsconfig",
+    deps = [
+        "//:node_modules/@lonnblad/bacel-poc.cdk-core",
+        "//:node_modules/@lonnblad/bacel-poc.hello-world-service",
+        "//:node_modules/@types/node",
+        "//:node_modules/aws-cdk-lib",
+        "//:node_modules/constructs",
+        "//:node_modules/typescript",
+    ],
+)
+
+js_binary(
+    name = "app",
+    data = [
+        ":example-stack",
+    ],
+    entry_point = ":bin/app.js",
+)
+
+synth(
+    name = "synth",
+    cdk_app = ":app",
+    visibility = ["//visibility:public"],
+)

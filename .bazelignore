@@ -1,0 +1,3 @@
+node_modules
+projects/cdk-core/node_modules
+projects/hello-world-service/cdk/node_modules

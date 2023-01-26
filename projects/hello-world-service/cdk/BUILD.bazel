@@ -1,0 +1,49 @@
+load("@aspect_rules_ts//ts:defs.bzl", "ts_project")
+load("@aspect_rules_js//npm:defs.bzl", "npm_package", "stamped_package_json")
+load("@bazel_skylib//rules:copy_file.bzl", "copy_file")
+
+copy_file(
+    name = "cp_lambda_zip",
+    src = "//projects/hello-world-service/service/handler:lambda_zip",
+    out = "assets/lambda_deploy.zip",
+)
+
+stamped_package_json(
+    name = "package",
+    # This key is defined by /workspace_status.sh
+    stamp_var = "STABLE_BUILD_VERSION",
+)
+
+ts_project(
+    name = "cdk-ts",
+    srcs = [
+        "lib/index.ts",
+        ":package",
+    ],
+    composite = True,
+    data = [
+        ":cp_lambda_zip",
+    ],
+    declaration_map = True,
+    tsconfig = "//:tsconfig",
+    deps = [
+        "//:node_modules/@lonnblad/bacel-poc.cdk-core",
+        "//:node_modules/@types/node",
+        "//:node_modules/aws-cdk-lib",
+        "//:node_modules/constructs",
+        "//:node_modules/typescript",
+    ],
+)
+
+npm_package(
+    name = "cdk",
+    srcs = [
+        "package.json",
+        ":cdk-ts",
+    ],
+    include_runfiles = True,
+    include_srcs_packages = [
+        "**",
+    ],
+    visibility = ["//visibility:public"],
+)
