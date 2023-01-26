@@ -27,7 +27,7 @@ ts_project(
     declaration_map = True,
     tsconfig = "//:tsconfig",
     deps = [
-        "//:node_modules/@lonnblad/bacel-poc-cdk-core",
+        "//:node_modules/@lonnblad/bacel-poc.cdk-core",
         "//:node_modules/@types/node",
         "//:node_modules/aws-cdk-lib",
         "//:node_modules/constructs",

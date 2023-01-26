@@ -5,7 +5,7 @@ import { AssetCode } from "aws-cdk-lib/aws-lambda";
 import { Construct } from "constructs";
 import { join } from "path";
 
-import { GoLambdaFunction } from "@lonnblad/bacel-poc-cdk-core";
+import { GoLambdaFunction } from "@lonnblad/bacel-poc.cdk-core";
 
 export class HelloWorldService extends Construct {
   constructor(scope: Construct, id: string) {

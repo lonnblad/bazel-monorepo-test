@@ -43,7 +43,7 @@ jobs:
 
       - run: bazel test //...
 
-  publish-gpr:
+  publish:
     needs: [build, test]
     runs-on: ubuntu-latest
     permissions:
@@ -51,11 +51,20 @@ jobs:
       contents: read
     steps:
       - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      - uses: bazelbuild/setup-bazelisk@v2
+
+      - name: Mount bazel cache
+        uses: actions/cache@v3
         with:
-          node-version: 16
-          registry-url: https://npm.pkg.github.com/
-      - run: npm ci
-      - run: npm publish
+          path: ~/.cache/bazel
+          key: bazel-build-${{ env.HEAD_SHA }}
+          restore-keys: |
+            bazel-build-${{ env.BASE_SHA }}
+            bazel-build-
+
+      - run: bazel build //... --sandbox_debug --config=release
+
+      - name: publish cdk-core
         env:
           NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+        run: cd bazel-bin/node_modules/@lonnblad/bacel-poc.cdk-core && pnpm publish --dry-run --no-git-checks
