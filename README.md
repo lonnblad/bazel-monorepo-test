@@ -46,10 +46,14 @@ bazel run //:gazelle-update-repos
 
 ### Bazel build-files
 
+```sh
+bazel run -- @pnpm//:pnpm --dir $PWD install
+```
+
 ### Adding a Dependency
 
 ```sh
-pnpm add <dependency>
+bazel run -- @pnpm//:pnpm --dir $PWD add <dependency>
 ```
 
 ## TODO

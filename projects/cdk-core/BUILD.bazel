@@ -1,12 +1,19 @@
 load("@aspect_rules_ts//ts:defs.bzl", "ts_project")
-load("@aspect_rules_js//npm:defs.bzl", "npm_package")
+load("@aspect_rules_js//npm:defs.bzl", "npm_package", "stamped_package_json")
+
+stamped_package_json(
+    name = "package",
+    # This key is defined by /workspace_status.sh
+    stamp_var = "STABLE_BUILD_VERSION",
+)
 
 ts_project(
     name = "cdk-core-ts",
-    composite = True,
-    data = [
+    srcs = [
         "lib/index.ts",
+        ":package",
     ],
+    composite = True,
     declaration_map = True,
     tsconfig = "//:tsconfig",
     deps = [
@@ -20,12 +27,8 @@ ts_project(
 npm_package(
     name = "cdk-core",
     srcs = [
-        "package.json",
         ":cdk-core-ts",
     ],
     include_runfiles = True,
-    include_srcs_packages = [
-        "**",
-    ],
     visibility = ["//visibility:public"],
 )

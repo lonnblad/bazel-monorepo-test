@@ -4,8 +4,8 @@ importers:
 
   .:
     specifiers:
-      '@bazel-poc/cdk-core': workspace:*
-      '@bazel-poc/hello-world-service': workspace:*
+      '@lonnblad/bacel-poc-cdk-core': workspace:*
+      '@lonnblad/bacel-poc-hello-world-service': workspace:*
       '@tsconfig/node18-strictest': 1.0.0
       '@types/node': 18.11.9
       aws-cdk: 2.61.1
@@ -13,8 +13,8 @@ importers:
       constructs: 10.1.225
       typescript: 4.9.3
     dependencies:
-      '@bazel-poc/cdk-core': link:projects/cdk-core
-      '@bazel-poc/hello-world-service': link:projects/hello-world-service/cdk
+      '@lonnblad/bacel-poc-cdk-core': link:projects/cdk-core
+      '@lonnblad/bacel-poc-hello-world-service': link:projects/hello-world-service/cdk
       aws-cdk-lib: 2.61.1_constructs@10.1.225
       constructs: 10.1.225
     devDependencies:

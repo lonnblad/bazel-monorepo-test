@@ -11,8 +11,8 @@ ts_project(
     declaration_map = True,
     tsconfig = "//:tsconfig",
     deps = [
-        "//:node_modules/@bazel-poc/cdk-core",
-        "//:node_modules/@bazel-poc/hello-world-service",
+        "//:node_modules/@lonnblad/bacel-poc-cdk-core",
+        "//:node_modules/@lonnblad/bacel-poc-hello-world-service",
         "//:node_modules/@types/node",
         "//:node_modules/aws-cdk-lib",
         "//:node_modules/constructs",

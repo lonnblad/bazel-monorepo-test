@@ -1,1 +1,4 @@
 build --disk_cache=~/.cache/bazel
+
+# Enable with --config=release
+build:release --stamp --workspace_status_command=$(pwd)/workspace_status.sh

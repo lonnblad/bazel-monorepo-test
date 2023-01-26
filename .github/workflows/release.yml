@@ -1,0 +1,61 @@
+name: Node.js Package
+
+on:
+  release:
+    types: [published]
+
+env:
+  HEAD_SHA: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.sha || github.event.after }}
+  BASE_SHA: ${{ github.event_name == 'pull_request' && github.event.pull_request.base.sha || github.event.before }}
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: bazelbuild/setup-bazelisk@v2
+
+      - name: Mount bazel cache
+        uses: actions/cache@v3
+        with:
+          path: ~/.cache/bazel
+          key: bazel-build-${{ env.HEAD_SHA }}
+          restore-keys: |
+            bazel-build-${{ env.BASE_SHA }}
+            bazel-build-
+
+      - run: bazel build //...
+
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: bazelbuild/setup-bazelisk@v2
+
+      - name: Mount bazel cache
+        uses: actions/cache@v3
+        with:
+          path: ~/.cache/bazel
+          key: bazel-build-${{ env.HEAD_SHA }}
+          restore-keys: |
+            bazel-build-${{ env.BASE_SHA }}
+            bazel-build-
+
+      - run: bazel test //...
+
+  publish-gpr:
+    needs: [build, test]
+    runs-on: ubuntu-latest
+    permissions:
+      packages: write
+      contents: read
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16
+          registry-url: https://npm.pkg.github.com/
+      - run: npm ci
+      - run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
