@@ -4,10 +4,6 @@ on:
   release:
     types: [published]
 
-env:
-  HEAD_SHA: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.sha || github.event.after }}
-  BASE_SHA: ${{ github.event_name == 'pull_request' && github.event.pull_request.base.sha || github.event.before }}
-
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -19,9 +15,8 @@ jobs:
         uses: actions/cache@v3
         with:
           path: ~/.cache/bazel
-          key: bazel-build-${{ env.HEAD_SHA }}
+          key: bazel-build-${GITHUB_SHA}
           restore-keys: |
-            bazel-build-${{ env.BASE_SHA }}
             bazel-build-
 
       - run: bazel build //...
@@ -36,10 +31,9 @@ jobs:
         uses: actions/cache@v3
         with:
           path: ~/.cache/bazel
-          key: bazel-build-${{ env.HEAD_SHA }}
+          key: bazel-test-${GITHUB_SHA}
           restore-keys: |
-            bazel-build-${{ env.BASE_SHA }}
-            bazel-build-
+            bazel-test-
 
       - run: bazel test //...
 
@@ -57,14 +51,15 @@ jobs:
         uses: actions/cache@v3
         with:
           path: ~/.cache/bazel
-          key: bazel-build-${{ env.HEAD_SHA }}
+          key: bazel-build-${GITHUB_SHA}
           restore-keys: |
-            bazel-build-${{ env.BASE_SHA }}
             bazel-build-
 
       - run: bazel build //... --sandbox_debug --config=release
 
       - uses: pnpm/action-setup@v2
+        with:
+          version: 7.13
 
       - name: publish cdk-core
         env:

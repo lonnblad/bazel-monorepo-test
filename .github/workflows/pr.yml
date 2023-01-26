@@ -38,10 +38,10 @@ jobs:
         uses: actions/cache@v3
         with:
           path: ~/.cache/bazel
-          key: bazel-build-${{ env.HEAD_SHA }}
+          key: bazel-test-${{ env.HEAD_SHA }}
           restore-keys: |
-            bazel-build-${{ env.BASE_SHA }}
-            bazel-build-
+            bazel-test-${{ env.BASE_SHA }}
+            bazel-test-
 
       - run: bazel test //...
 
@@ -67,6 +67,8 @@ jobs:
       - run: bazel build //... --sandbox_debug --config=release
 
       - uses: pnpm/action-setup@v2
+        with:
+          version: 7.13
 
       - name: publish cdk-core
         env:
