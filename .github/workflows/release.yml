@@ -64,6 +64,8 @@ jobs:
 
       - run: bazel build //... --sandbox_debug --config=release
 
+      - uses: pnpm/action-setup@v2
+
       - name: publish cdk-core
         env:
           NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
